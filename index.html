@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ackermann Wichteln 2026</title>
+<meta name="description" content="Das Weihnachtswichteln der Familie Ackermann. Name in den Sack, Wunsch auf den Zettel, und am Fest wird beschenkt.">
+<meta name="theme-color" content="#13241e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;700&family=DM+Mono:wght@500&display=swap">
+<style>
+/* Layout: eine Winternacht. Scherenschnitt-Hero oben, darunter ein schneeweisser Wunschzettel als einzige Karte. Bewusst nur ein (dunkles) Farbschema. */
+:root{
+  --nacht:#13241e;      /* Tannennacht, Seitengrund */
+  --nacht-2:#1b3229;    /* leicht hellere Flächen auf Nacht */
+  --schnee:#eef1ec;     /* Papier, Scherenschnitt, Karte */
+  --tinte:#15221c;      /* Text auf Schnee */
+  --rot:#c8262c;        /* Schweizer Rot, Aktionen */
+  --kerze:#e2b85c;      /* Kerzenlicht, kleine Akzente */
+  --nebel:#9db1a6;      /* gedämpfter Text auf Nacht */
+  --linie:#cfd8d1;      /* Linien auf Schnee */
+  --f-display:"Gloock", "Georgia", "Times New Roman", serif;
+  --f-text:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--nacht)}
+body{margin:0;background:var(--nacht);color:var(--schnee);font:16px/1.6 var(--f-text);-webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+img{max-width:100%}
+a{color:inherit}
+button,input,textarea,select{font:inherit}
+:focus-visible{outline:3px solid var(--kerze);outline-offset:3px;border-radius:4px}
+
+.wrap{max-width:600px;margin:0 auto;padding-inline:20px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;padding-block:56px 0}
+.sterne{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--kerze);font-weight:700;margin:0 0 14px}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.6rem,10vw,4.4rem);line-height:.98;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--kerze)}
+.lead{font-size:1.12rem;color:var(--schnee);max-width:34em;margin:22px 0 0;text-wrap:pretty}
+.lead + .lead{margin-top:12px}
+.lead .leise{color:var(--nebel)}
+.scherenschnitt{display:block;width:100%;height:150px;margin-top:36px}
+
+/* ---------- Kapitel ---------- */
+.kapitel{list-style:none;margin:0;padding:28px 0 8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;counter-reset:k}
+.kapitel li{counter-increment:k;min-width:0}
+.kapitel li::before{content:"Kapitel " counter(k);display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--kerze);font-weight:700;margin-bottom:4px}
+.kapitel b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.15rem;line-height:1.2}
+.kapitel span{display:block;color:var(--nebel);font-size:.88rem;line-height:1.45;margin-top:4px}
+@media (max-width:520px){.kapitel{grid-template-columns:1fr;gap:16px}}
+
+/* ---------- Wunschzettel (Karte) ---------- */
+.zettel{position:relative;background:var(--schnee);color:var(--tinte);border-radius:6px;padding:30px 24px 28px;margin-block:28px 18px;
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.zettel::before{ /* gestanzter Rand oben, wie vom Block gerissen */
+  content:"";position:absolute;left:0;right:0;top:-7px;height:14px;
+  background:radial-gradient(circle at 7px 7px,var(--nacht) 5px,transparent 5.5px) 0 0/18px 14px repeat-x}
+.zettel h2{font-family:var(--f-display);font-weight:400;font-size:1.9rem;line-height:1.1;margin:0 0 6px;text-wrap:balance}
+.zettel .sub{margin:0 0 22px;color:#4a5a52}
+.feld{display:grid;gap:6px;margin-bottom:18px}
+.feld label{font-weight:700;font-size:.95rem}
+.feld .hilfe{font-size:.86rem;color:#58675f;margin-top:-2px}
+input[type=text],input[type=email],input[type=password],textarea,select{
+  width:100%;border:0;border-bottom:2px solid var(--linie);background:transparent;color:var(--tinte);
+  padding:10px 2px;border-radius:0;font-size:1.05rem;transition:border-color .2s}
+textarea{min-height:96px;resize:vertical;line-height:1.5;
+  background-image:repeating-linear-gradient(transparent 0 calc(1.5em - 1px),var(--linie) calc(1.5em - 1px) 1.5em);
+  background-position:0 10px;border-bottom-color:transparent}
+input:focus,textarea:focus,select:focus{outline:none;border-bottom-color:var(--rot)}
+select{border:2px solid var(--linie);border-radius:6px;padding:8px 10px;font-size:.95rem;background:#fff}
+.budget{display:flex;align-items:center;gap:14px;border:2px dashed var(--rot);border-radius:6px;padding:12px 14px;margin:4px 0 22px}
+.budget .betrag{font-family:var(--f-display);font-size:1.7rem;color:var(--rot);white-space:nowrap;line-height:1}
+.budget p{margin:0;font-size:.92rem;line-height:1.45;min-width:0;flex:1 1 200px}
+.budget{flex-wrap:wrap}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:14px 26px;
+  background:var(--rot);color:#fff;font-weight:700;font-size:1.02rem;cursor:pointer;transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.55;cursor:wait}
+.btn.voll{width:100%}
+.btn.leise{background:transparent;color:var(--tinte);border:2px solid var(--linie)}
+.btn.klein{padding:8px 14px;font-size:.88rem}
+.link{background:none;border:0;padding:0;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.fehler{color:var(--rot);font-weight:500;font-size:.92rem;margin:10px 0 0}
+
+/* Code-Anzeige */
+.code{font-family:var(--f-mono);font-size:1.5rem;letter-spacing:.08em;background:var(--tinte);color:var(--kerze);
+  border-radius:6px;padding:12px 14px;text-align:center;margin:8px 0;word-break:break-all;user-select:all}
+.zeile{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* Aufdecken */
+.los{position:relative;margin-top:18px;border-radius:8px;min-height:170px;perspective:900px;cursor:pointer}
+.los-innen{position:relative;width:100%;min-height:170px;transition:transform .7s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.los.offen .los-innen{transform:rotateY(180deg)}
+.los-seite{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:8px;padding:22px;display:flex;flex-direction:column;justify-content:center}
+.los-vorne{background:var(--rot);color:#fff;align-items:center;text-align:center;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 10px,transparent 10px 20px)}
+.los-vorne b{font-family:var(--f-display);font-weight:400;font-size:1.5rem}
+.los-hinten{background:var(--tinte);color:var(--schnee);transform:rotateY(180deg)}
+.los-hinten .name{font-family:var(--f-display);font-size:2rem;line-height:1.1;color:var(--kerze);margin:2px 0 10px}
+.los-hinten .wunsch{white-space:pre-wrap;margin:0;font-size:.98rem}
+.los.offen{min-height:var(--los-h,170px)}
+
+.status{display:flex;gap:12px;align-items:flex-start;background:#e3e9e3;border-radius:6px;padding:14px;margin-top:16px}
+.status .punkt{flex:none;width:10px;height:10px;border-radius:50%;background:var(--kerze);margin-top:8px;box-shadow:0 0 0 4px rgba(226,184,92,.25)}
+.status p{margin:0}
+
+hr.trenner{border:0;border-top:1px solid var(--linie);margin:24px 0}
+
+/* Fuss */
+.fuss{color:var(--nebel);font-size:.88rem;padding-block:6px 48px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
+.fuss .link{color:var(--nebel)}
+
+.demo{background:var(--kerze);color:var(--tinte);font-size:.85rem;text-align:center;padding:8px 16px}
+
+/* ---------- Admin ---------- */
+.liste{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.liste li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:14px 0;border-bottom:1px solid var(--linie);align-items:start}
+.liste .wer{font-weight:700}
+.liste .was{grid-column:1/-1;color:#4a5a52;font-size:.92rem;white-space:pre-wrap;min-width:0;overflow-wrap:anywhere}
+.liste .partner{grid-column:1/-1;display:flex;gap:8px;align-items:center;font-size:.88rem;flex-wrap:wrap}
+.liste .partner select{width:auto;max-width:100%}
+.zahl{font-variant-numeric:tabular-nums}
+.qr-box{display:grid;place-items:center;background:#fff;border-radius:8px;padding:18px;margin:12px 0}
+.qr-box img,.qr-box canvas{display:block;max-width:100%;height:auto}
+.leer{color:#58675f;font-style:italic;padding:12px 0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tinte);color:var(--schnee);
+  border:1px solid var(--kerze);padding:10px 18px;border-radius:999px;font-size:.92rem;z-index:10;max-width:calc(100% - 32px)}
+
+/* Auflösung: der Wichtelkreis */
+.kreis{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:0}
+.kreis li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--linie)}
+.kreis li:last-child{border-bottom:0}
+.kreis .von{font-weight:700;min-width:0;overflow-wrap:anywhere}
+.kreis .an{font-family:var(--f-display);font-size:1.15rem;min-width:0;overflow-wrap:anywhere;text-align:right}
+.kreis .pfeil{color:var(--rot);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;white-space:nowrap}
+.aufloesung-oeffentlich{background:var(--schnee);color:var(--tinte);border-radius:6px;padding:26px 24px;margin-block:28px 18px;border-top:6px solid var(--kerze)}
+.aufloesung-oeffentlich h2{font-family:var(--f-display);font-weight:400;font-size:1.9rem;line-height:1.1;margin:0 0 6px}
+.aufloesung-oeffentlich .sub{margin:0;color:#4a5a52}
+.geheim{background:#e3e9e3;border-radius:6px;padding:4px 14px;margin-top:12px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="demo" id="demoBanner" hidden>Demo-Modus: Alles wird nur in diesem Browser gespeichert. Für die Familie zuerst Firebase einrichten (siehe Anleitung).</div>
+
+<header class="hero">
+  <canvas class="sterne" id="sterne" aria-hidden="true"></canvas>
+  <div class="wrap" style="position:relative">
+    <p class="eyebrow">Familie Ackermann · Weihnachten 2026</p>
+    <h1>Einer zieht.<br>Einer <em>staunt.</em></h1>
+    <p class="lead">Es war einmal eine Familie, die jedes Jahr an Heiligabend unter einem Berg Geschenkpapier verschwand. Bis jemand sagte: Jeder beschenkt nur einen. Dafür mit ganzem Herzen.</p>
+    <p class="lead"><span class="leise">Seit dem Ja-Wort gehört auch ein Peter zu den Ackermanns. Willkommen im Sack, Fabian.</span></p>
+  </div>
+  <canvas class="scherenschnitt" id="scherenschnitt" aria-hidden="true"></canvas>
+</header>
+
+<main class="wrap">
+
+  <ol class="kapitel" aria-label="So läuft das Wichteln">
+    <li><b>Der Name kommt in den Sack</b><span>Du trägst dich ein und schreibst einen Wunsch oder Tipp dazu.</span></li>
+    <li><b>Das Los fällt</b><span>Wenn alle dabei sind, wird gezogen. Du siehst nur, wen du beschenkst.</span></li>
+    <li><b>Das Fest</b><span>Unter dem Christbaum wird das Geheimnis gelüftet.</span></li>
+  </ol>
+
+  <!-- 0) Grosse Auflösung (erscheint, sobald die Wichtelmeisterin sie freigibt) -->
+  <section class="aufloesung-oeffentlich" id="vAufloesung" aria-labelledby="hAufloesung" hidden>
+    <p class="eyebrow" style="margin-bottom:8px">Die grosse Auflösung</p>
+    <h2 id="hAufloesung">Der Wichtelkreis ist geschlossen.</h2>
+    <p class="sub">Jeder hat einen beschenkt, und jeder wurde beschenkt. So lief der Kreis dieses Jahr:</p>
+    <ol class="kreis" id="kreisOeffentlich"></ol>
+  </section>
+
+  <!-- 1) Anmelden -->
+  <section class="zettel" id="vAnmelden" aria-labelledby="hAnmelden">
+    <h2 id="hAnmelden">Dein Wunschzettel</h2>
+    <p class="sub" id="hinweisText">Schreib dich ein, bevor das Los gezogen wird.</p>
+    <form id="fAnmelden" novalidate>
+      <div class="feld">
+        <label for="iName">Wer bist du?</label>
+        <input type="text" id="iName" maxlength="40" autocomplete="given-name" placeholder="z. B. Grosi oder Fabian Peter" required>
+      </div>
+      <div class="feld">
+        <label for="iWunsch">Ein Wunsch, ein Tipp, ein Wink mit dem Zaunpfahl</label>
+        <p class="hilfe">Lieblingsschoggi, Hobby, Kleidergrösse, «bitte keine Socken». Alles hilft deinem Wichtel.</p>
+        <textarea id="iWunsch" maxlength="300" placeholder="Ich lese gerade gern Krimis aus dem Emmental und trinke Tee ohne Ende …" required></textarea>
+      </div>
+      <div class="budget">
+        <span class="betrag">CHF 50.–</span>
+        <p><b>Höchstens.</b> Mehr Herz als Franken: Selbstgemachtes, Erlebtes und Gefundenes zählen doppelt.</p>
+      </div>
+      <button class="btn voll" type="submit" id="bAnmelden">Ich bin dabei</button>
+      <p class="fehler" id="eAnmelden" role="alert" hidden></p>
+    </form>
+    <hr class="trenner">
+    <p style="margin:0;font-size:.92rem">Schon eingetragen, aber auf einem anderen Handy? <button class="link" id="bCodeZeigen" type="button">Mit deinem Schlüssel öffnen</button></p>
+    <form id="fCode" hidden style="margin-top:12px" novalidate>
+      <div class="feld">
+        <label for="iCode">Dein Schlüssel</label>
+        <input type="text" id="iCode" autocomplete="off" autocapitalize="characters" placeholder="XXXX-XXXX-XXXX">
+      </div>
+      <button class="btn leise" type="submit">Öffnen</button>
+      <p class="fehler" id="eCode" role="alert" hidden></p>
+    </form>
+  </section>
+
+  <!-- 2) Eingetragen -->
+  <section class="zettel" id="vMein" aria-labelledby="hMein" hidden>
+    <h2 id="hMein">Grüezi <span id="meinName"></span>, du bist im Sack.</h2>
+    <p class="sub">Jetzt heisst es warten wie vor dem Adventskalender.</p>
+
+    <div id="wartenBox" class="status"><span class="punkt" aria-hidden="true"></span>
+      <p><b>Das Los ist noch nicht gefallen.</b> Sobald alle eingetragen sind, wird gezogen. Komm danach mit dem gleichen Handy oder deinem Schlüssel hierher zurück. <span id="hinweisMein"></span></p>
+    </div>
+
+    <div id="losBox" hidden>
+      <p style="margin:18px 0 0"><b>Das Los ist gefallen.</b> Schau, dass dir niemand über die Schulter guckt.</p>
+      <div class="los" id="los" role="button" tabindex="0" aria-label="Los aufdecken">
+        <div class="los-innen">
+          <div class="los-seite los-vorne"><b>Antippen zum Aufdecken</b><span style="opacity:.85;font-size:.9rem;margin-top:6px">Psst. Ganz geheim.</span></div>
+          <div class="los-seite los-hinten" id="losHinten">
+            <span style="font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--nebel)">Du beschenkst</span>
+            <div class="name" id="zielName"></div>
+            <p class="wunsch" id="zielWunsch"></p>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:.88rem;color:#58675f;margin:10px 0 0">Budget: höchstens CHF 50.–</p>
+    </div>
+
+    <hr class="trenner">
+    <p style="margin:0 0 4px;font-weight:700">Dein geheimer Schlüssel</p>
+    <p style="margin:0;font-size:.92rem;color:#4a5a52">Hüte ihn wie Grosis Guetzlirezept. Damit siehst du dein Los auch auf einem anderen Gerät.</p>
+    <div class="code" id="meinCode"></div>
+    <div class="zeile">
+      <button class="btn leise klein" id="bCodeKopieren" type="button">Schlüssel kopieren</button>
+      <button class="btn leise klein" id="bWunschAendern" type="button">Wunsch ändern</button>
+    </div>
+
+    <form id="fWunsch" hidden style="margin-top:16px" novalidate>
+      <div class="feld">
+        <label for="iWunschNeu">Dein Wunsch</label>
+        <textarea id="iWunschNeu" maxlength="300"></textarea>
+      </div>
+      <button class="btn klein" type="submit">Speichern</button>
+    </form>
+  </section>
+
+  <!-- 3) Wichtelmeisterin -->
+  <section class="zettel" id="vAdmin" aria-labelledby="hAdmin" hidden>
+    <h2 id="hAdmin">Die Wichtelstube</h2>
+    <p class="sub">Nur für die Wichtelmeisterin. Hier wird gezogen.</p>
+
+    <form id="fLogin" novalidate>
+      <div class="feld"><label for="iMail">E-Mail</label><input type="email" id="iMail" autocomplete="username"></div>
+      <div class="feld"><label for="iPw">Passwort</label><input type="password" id="iPw" autocomplete="current-password"></div>
+      <button class="btn" type="submit">Eintreten</button>
+      <p class="fehler" id="eLogin" role="alert" hidden></p>
+    </form>
+
+    <div id="adminInhalt" hidden>
+      <div class="zeile" style="justify-content:space-between">
+        <p style="margin:0"><b class="zahl" id="anzahl">0</b> im Sack · <span id="adminStatus">noch nicht gezogen</span></p>
+        <button class="link" id="bLogout" type="button">Abmelden</button>
+      </div>
+
+      <h3 style="font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:22px 0 4px">Wer ist dabei</h3>
+      <p style="margin:0;font-size:.88rem;color:#58675f">Paare kannst du verbinden. Sie ziehen sich dann nicht gegenseitig.</p>
+      <ul class="liste" id="liste"></ul>
+
+      <div class="feld" style="margin-top:20px">
+        <label for="iHinweis">Hinweis für alle</label>
+        <input type="text" id="iHinweis" maxlength="120" placeholder="z. B. Eintragen bis 30. November, gefeiert wird am 25. Dezember">
+      </div>
+      <button class="btn leise klein" id="bHinweis" type="button">Hinweis speichern</button>
+
+      <hr class="trenner">
+      <button class="btn voll" id="bZiehen" type="button">Das Los ziehen</button>
+      <div id="ziehenBestaetigen" hidden style="margin-top:12px" class="status">
+        <span class="punkt" aria-hidden="true"></span>
+        <div><p id="ziehenText" style="margin:0 0 10px"></p>
+          <div class="zeile"><button class="btn klein" id="bZiehenJa" type="button">Ja, ziehen</button><button class="btn leise klein" id="bZiehenNein" type="button">Abbrechen</button></div></div>
+      </div>
+      <p class="fehler" id="eZiehen" role="alert" hidden></p>
+
+      <div id="aufloesungAdmin" hidden>
+        <hr class="trenner">
+        <h3 style="font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:0 0 4px">Die Auflösung</h3>
+        <p style="margin:0;font-size:.88rem;color:#58675f">Wer wen gezogen hat, ist gespeichert. Ziehst du selbst mit, schau erst am Fest nach.</p>
+        <div class="zeile" style="margin-top:12px">
+          <button class="btn leise klein" id="bKreisZeigen" type="button" aria-expanded="false">Wer beschenkt wen? Anzeigen</button>
+          <button class="btn klein" id="bFreigeben" type="button">Auflösung für alle freigeben</button>
+        </div>
+        <div class="geheim" id="kreisAdminBox" hidden><ol class="kreis" id="kreisAdmin"></ol></div>
+        <div id="freigebenBestaetigen" hidden style="margin-top:12px" class="status">
+          <span class="punkt" aria-hidden="true"></span>
+          <div><p id="freigebenText" style="margin:0 0 10px"></p>
+            <div class="zeile"><button class="btn klein" id="bFreigebenJa" type="button">Ja, auflösen</button><button class="btn leise klein" id="bFreigebenNein" type="button">Abbrechen</button></div></div>
+        </div>
+      </div>
+
+      <hr class="trenner">
+      <h3 style="font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:0 0 4px">Alles gesichert</h3>
+      <p style="margin:0;font-size:.88rem;color:#58675f">Alle Anmeldungen mit Wunsch liegen sicher in der Datenbank. Hier gibt es zusätzlich eine Liste für Excel.</p>
+      <div class="zeile" style="margin-top:12px">
+        <button class="btn leise klein" id="bCsv" type="button">Liste mit Wünschen speichern</button>
+        <button class="btn leise klein" id="bCsvMitLos" type="button" hidden>Liste inkl. Auflösung speichern</button>
+      </div>
+
+      <hr class="trenner">
+      <h3 style="font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:0 0 4px">QR-Code für die Familie</h3>
+      <p style="margin:0;font-size:.88rem;color:#58675f">Führt direkt zum Wunschzettel. Als Bild speichern und in den Familienchat schicken.</p>
+      <div class="qr-box" id="qr"></div>
+      <div class="zeile">
+        <button class="btn klein" id="bQrLaden" type="button">QR-Code speichern</button>
+        <button class="btn leise klein" id="bTextKopieren" type="button">Einladungstext kopieren</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="fuss">
+    <span>Psst. Wer wen beschenkt, bleibt bis zum Fest unter dem Christbaum.</span>
+    <a class="link" href="#stube">Wichtelstube</a>
+  </footer>
+</main>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<!-- ============ EINSTELLUNGEN ============ -->
+<script>
+/* Hier die Werte aus Firebase einfügen (Projekteinstellungen → Deine Apps → Web-App → Konfiguration).
+   Solange hier null steht, läuft die Seite im Demo-Modus (Speicher nur im eigenen Browser). */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBzlvnMUg8-W6qQhry-hW3lpaZB4l8R3Us",
+  authDomain: "ackermanns-und-peters-wichteln.firebaseapp.com",
+  projectId: "ackermanns-und-peters-wichteln",
+  storageBucket: "ackermanns-und-peters-wichteln.firebasestorage.app",
+  messagingSenderId: "1011607014492",
+  appId: "1:1011607014492:web:be65bd0a838e0d3aa2aa99"
+};
+/* Beispiel:
+const FIREBASE_CONFIG = {
+  apiKey: "AIza...",
+  authDomain: "ackermann-wichteln.firebaseapp.com",
+  projectId: "ackermann-wichteln",
+  storageBucket: "ackermann-wichteln.appspot.com",
+  messagingSenderId: "1234567890",
+  appId: "1:1234567890:web:abc123"
+};
+*/
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+(function(){
+"use strict";
+const $ = id => document.getElementById(id);
+const SPEICHER_KEY = "ackermann-wichteln-2026-schluessel";
+
+/* ---------- kleine Helfer ---------- */
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function toast(t){ const el=$("toast"); el.textContent=t; el.hidden=false; clearTimeout(toast._t); toast._t=setTimeout(()=>el.hidden=true,2600); }
+function fehler(id,t){ const el=$(id); if(!t){ el.hidden=true; return; } el.textContent=t; el.hidden=false; }
+
+const ALPHABET="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // ohne 0/O/1/I
+function neuerSchluessel(){
+  const a=new Uint8Array(12); crypto.getRandomValues(a);
+  let s=""; for(const b of a) s+=ALPHABET[b%32];
+  return s;
+}
+function zeigeSchluessel(s){ return s.replace(/(.{4})(?=.)/g,"$1-"); }
+function normSchluessel(s){ return (s||"").toUpperCase().replace(/[^A-Z0-9]/g,""); }
+
+/* Ziehung: ein einziger Kreis (A→B→C→…→A), niemand zieht sich selbst oder den eigenen Partner. */
+function ziehen(teiln){
+  const n=teiln.length;
+  if(n<3) throw new Error("Für das Wichteln braucht es mindestens drei Personen.");
+  for(let versuch=0;versuch<5000;versuch++){
+    const r=teiln.slice();
+    for(let i=n-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [r[i],r[j]]=[r[j],r[i]]; }
+    let ok=true; const paare=[];
+    for(let i=0;i<n;i++){
+      const geber=r[i], empf=r[(i+1)%n];
+      if(geber.partner && geber.partner===empf.id){ ok=false; break; }
+      paare.push([geber,empf]);
+    }
+    if(ok) return paare;
+  }
+  throw new Error("Mit diesen Paaren geht die Ziehung nicht auf. Löse ein Paar oder warte auf weitere Anmeldungen.");
+}
+window.__wichtelZiehen = ziehen; // für Tests
+
+/* ---------- Speicher: Firebase oder Demo ---------- */
+const DEMO = !FIREBASE_CONFIG || typeof firebase==="undefined";
+let api;
+
+if(!DEMO){
+  firebase.initializeApp(FIREBASE_CONFIG);
+  const db=firebase.firestore(), auth=firebase.auth();
+  const T=db.collection("teilnehmer"), INFO=db.collection("info").doc("status"), AUF=db.collection("info").doc("aufloesung");
+  api={
+    async anmelden(name,wunsch){
+      const id=neuerSchluessel();
+      await T.doc(id).set({name,wunsch,erstellt:firebase.firestore.FieldValue.serverTimestamp()});
+      return id;
+    },
+    async holen(id){ const d=await T.doc(id).get(); return d.exists?{id:d.id,...d.data()}:null; },
+    async wunschAendern(id,wunsch){ await T.doc(id).update({wunsch}); },
+    async status(){ try{ const d=await INFO.get(); return d.exists?d.data():{}; }catch(e){ return {}; } },
+    onAuth(cb){ auth.onAuthStateChanged(u=>cb(!!u)); },
+    async login(m,p){ await auth.signInWithEmailAndPassword(m,p); },
+    async logout(){ await auth.signOut(); },
+    async alle(){ const q=await T.orderBy("erstellt").get(); return q.docs.map(d=>({id:d.id,...d.data()})); },
+    async partnerSetzen(liste,id,partnerId){
+      const b=db.batch(); const ich=liste.find(x=>x.id===id);
+      if(ich.partner) b.update(T.doc(ich.partner),{partner:null});
+      if(partnerId){ const p=liste.find(x=>x.id===partnerId); if(p&&p.partner&&p.partner!==id) b.update(T.doc(p.partner),{partner:null}); b.update(T.doc(partnerId),{partner:id}); }
+      b.update(T.doc(id),{partner:partnerId||null});
+      await b.commit();
+    },
+    async entfernen(liste,id){ const b=db.batch(); const ich=liste.find(x=>x.id===id); if(ich&&ich.partner) b.update(T.doc(ich.partner),{partner:null}); b.delete(T.doc(id)); await b.commit(); },
+    async ziehungSpeichern(paare){
+      const b=db.batch();
+      for(const [g,e] of paare) b.update(T.doc(g.id),{ziehtId:e.id,ziehtName:e.name,ziehtWunsch:e.wunsch||""});
+      b.set(INFO,{gezogen:true,aufgeloest:false,gezogenAm:firebase.firestore.FieldValue.serverTimestamp(),anzahl:paare.length},{merge:true});
+      b.delete(AUF);
+      await b.commit();
+    },
+    async aufloesen(kreis){
+      const b=db.batch();
+      b.set(AUF,{kreis});
+      b.set(INFO,{aufgeloest:true},{merge:true});
+      await b.commit();
+    },
+    async verbergen(){ const b=db.batch(); b.delete(AUF); b.set(INFO,{aufgeloest:false},{merge:true}); await b.commit(); },
+    async aufloesung(){ try{ const d=await AUF.get(); return d.exists?(d.data().kreis||[]):null; }catch(e){ return null; } },
+    async hinweisSetzen(t){ await INFO.set({hinweis:t},{merge:true}); }
+  };
+} else {
+  const K="ackermann-wichteln-demo";
+  const lade=()=>{ try{ return JSON.parse(lsGet(K))||{t:{},info:{}}; }catch(e){ return {t:{},info:{}}; } };
+  const sp=s=>lsSet(K,JSON.stringify(s));
+  let s=lade();
+  api={
+    async anmelden(name,wunsch){ const id=neuerSchluessel(); s.t[id]={name,wunsch,erstellt:Date.now()}; sp(s); return id; },
+    async holen(id){ return s.t[id]?{id,...s.t[id]}:null; },
+    async wunschAendern(id,w){ s.t[id].wunsch=w; sp(s); },
+    async status(){ return s.info; },
+    onAuth(cb){ cb(true); },
+    async login(){}, async logout(){},
+    async alle(){ return Object.entries(s.t).map(([id,v])=>({id,...v})).sort((a,b)=>a.erstellt-b.erstellt); },
+    async partnerSetzen(liste,id,pid){
+      const alt=s.t[id].partner; if(alt&&s.t[alt]) s.t[alt].partner=null;
+      if(pid){ const pAlt=s.t[pid].partner; if(pAlt&&s.t[pAlt]) s.t[pAlt].partner=null; s.t[pid].partner=id; }
+      s.t[id].partner=pid||null; sp(s);
+    },
+    async entfernen(liste,id){ const p=s.t[id]&&s.t[id].partner; if(p&&s.t[p]) s.t[p].partner=null; delete s.t[id]; sp(s); },
+    async ziehungSpeichern(paare){ for(const [g,e] of paare){ s.t[g.id].ziehtId=e.id; s.t[g.id].ziehtName=e.name; s.t[g.id].ziehtWunsch=e.wunsch||""; } s.info.gezogen=true; s.info.aufgeloest=false; s.info.anzahl=paare.length; delete s.auf; sp(s); },
+    async aufloesen(kreis){ s.auf=kreis; s.info.aufgeloest=true; sp(s); },
+    async verbergen(){ delete s.auf; s.info.aufgeloest=false; sp(s); },
+    async aufloesung(){ return s.auf||null; },
+    async hinweisSetzen(t){ s.info.hinweis=t; sp(s); }
+  };
+  $("demoBanner").hidden=false;
+}
+
+/* ---------- Ansichten ---------- */
+function ansicht(name){
+  $("vAnmelden").hidden = name!=="anmelden";
+  $("vMein").hidden = name!=="mein";
+  $("vAdmin").hidden = name!=="admin";
+}
+
+async function hinweisLaden(){
+  const st=await api.status();
+  if(st && st.hinweis){ $("hinweisText").textContent=st.hinweis; $("hinweisMein").textContent=st.hinweis; }
+  return st||{};
+}
+
+let ich=null;
+async function meinLaden(id){
+  const d=await api.holen(id);
+  if(!d) return false;
+  ich=d; lsSet(SPEICHER_KEY,id);
+  $("meinName").textContent=d.name;
+  $("meinCode").textContent=zeigeSchluessel(id);
+  const gezogen=!!d.ziehtName;
+  $("wartenBox").hidden=gezogen; $("losBox").hidden=!gezogen;
+  $("bWunschAendern").hidden=gezogen;
+  if(gezogen){ $("zielName").textContent=d.ziehtName; $("zielWunsch").textContent=d.ziehtWunsch||"Kein Wunsch notiert. Zeit für Kreativität."; }
+  ansicht("mein");
+  return true;
+}
+
+/* Anmelden */
+$("fAnmelden").addEventListener("submit",async e=>{
+  e.preventDefault(); fehler("eAnmelden");
+  const name=$("iName").value.trim(), wunsch=$("iWunsch").value.trim();
+  if(!name){ fehler("eAnmelden","Bitte schreib deinen Namen hin, damit dein Wichtel weiss, wen er sucht."); $("iName").focus(); return; }
+  if(!wunsch){ fehler("eAnmelden","Ein kleiner Wunsch oder Tipp fehlt noch. Auch «Überrasch mich» ist erlaubt."); $("iWunsch").focus(); return; }
+  const b=$("bAnmelden"); b.disabled=true; b.textContent="Wird in den Sack gelegt …";
+  try{
+    const st=await api.status();
+    if(st.gezogen){ fehler("eAnmelden","Das Los ist schon gezogen. Melde dich bei der Wichtelmeisterin."); return; }
+    const id=await api.anmelden(name,wunsch);
+    await meinLaden(id);
+    window.scrollTo({top:$("vMein").offsetTop-20,behavior:"smooth"});
+  }catch(err){
+    console.error(err);
+    fehler("eAnmelden","Das hat nicht geklappt. Prüfe die Internetverbindung und versuch es nochmals.");
+  }finally{ b.disabled=false; b.textContent="Ich bin dabei"; }
+});
+
+/* Mit Schlüssel öffnen */
+$("bCodeZeigen").addEventListener("click",()=>{ $("fCode").hidden=false; $("iCode").focus(); });
+$("fCode").addEventListener("submit",async e=>{
+  e.preventDefault(); fehler("eCode");
+  const id=normSchluessel($("iCode").value);
+  if(id.length!==12){ fehler("eCode","Der Schlüssel hat 12 Zeichen, zum Beispiel ABCD-EFGH-JKLM."); return; }
+  try{ if(!(await meinLaden(id))) fehler("eCode","Diesen Schlüssel kennen wir nicht. Tippfehler?"); }
+  catch(err){ console.error(err); fehler("eCode","Öffnen hat nicht geklappt. Versuch es nochmals."); }
+});
+
+/* Los aufdecken */
+function losUmdrehen(){
+  const l=$("los"); if(l.classList.contains("offen")) return;
+  l.style.setProperty("--los-h",Math.max(170,$("losHinten").scrollHeight)+"px");
+  l.querySelector(".los-innen").style.minHeight=Math.max(170,$("losHinten").scrollHeight)+"px";
+  l.classList.add("offen"); l.setAttribute("aria-label","Los aufgedeckt");
+}
+$("los").addEventListener("click",losUmdrehen);
+$("los").addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); losUmdrehen(); } });
+
+/* Schlüssel kopieren */
+async function kopieren(text,ok){
+  try{ await navigator.clipboard.writeText(text); toast(ok); }
+  catch(e){ toast("Kopieren ging nicht. Bitte von Hand markieren."); }
+}
+$("bCodeKopieren").addEventListener("click",()=>kopieren(zeigeSchluessel(ich.id),"Schlüssel kopiert"));
+
+/* Wunsch ändern */
+$("bWunschAendern").addEventListener("click",()=>{ $("fWunsch").hidden=false; $("iWunschNeu").value=ich.wunsch||""; $("iWunschNeu").focus(); });
+$("fWunsch").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const w=$("iWunschNeu").value.trim(); if(!w) return;
+  try{ await api.wunschAendern(ich.id,w); ich.wunsch=w; $("fWunsch").hidden=true; toast("Wunsch gespeichert"); }
+  catch(err){ console.error(err); toast("Speichern hat nicht geklappt"); }
+});
+
+/* ---------- Auflösung ---------- */
+/* Bringt die Ziehung in Kreis-Reihenfolge: A beschenkt B, B beschenkt C, … */
+function kreisAusListe(l){
+  const nachId=new Map(l.map(x=>[x.id,x]));
+  const kreis=[], gesehen=new Set();
+  for(const start of l){
+    let p=start;
+    while(p && !gesehen.has(p.id) && p.ziehtName){
+      gesehen.add(p.id);
+      kreis.push({von:p.name,an:p.ziehtName});
+      p=nachId.get(p.ziehtId);
+    }
+  }
+  return kreis;
+}
+function kreisMalen(ol,kreis){
+  ol.textContent="";
+  for(const k of kreis){
+    const li=document.createElement("li");
+    const von=document.createElement("span"); von.className="von"; von.textContent=k.von;
+    const pf=document.createElement("span"); pf.className="pfeil"; pf.textContent="beschenkt →";
+    const an=document.createElement("span"); an.className="an"; an.textContent=k.an;
+    li.append(von,pf,an); ol.append(li);
+  }
+}
+
+/* Liste als CSV (öffnet sauber in Excel, mit Umlauten) */
+function csvSpeichern(mitLos){
+  const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const nachId=new Map(liste.map(x=>[x.id,x]));
+  const kopf=["Name","Wunsch / Tipp","Paar mit"].concat(mitLos?["beschenkt"]:[]);
+  const zeilen=liste.map(p=>[p.name,p.wunsch,p.partner&&nachId.get(p.partner)?nachId.get(p.partner).name:""].concat(mitLos?[p.ziehtName||""]:[]));
+  const text="﻿"+[kopf,...zeilen].map(z=>z.map(q).join(";")).join("\r\n");
+  const url=URL.createObjectURL(new Blob([text],{type:"text/csv;charset=utf-8"}));
+  const a=document.createElement("a"); a.href=url; a.download=mitLos?"Ackermann-Wichteln-2026-Aufloesung.csv":"Ackermann-Wichteln-2026-Teilnehmende.csv";
+  document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+
+/* ---------- Wichtelstube ---------- */
+let liste=[], adminStatusDaten={};
+async function adminLaden(){
+  liste=await api.alle();
+  const st=await api.status();
+  $("anzahl").textContent=liste.length;
+  const gezogen=liste.length>0 && liste.every(x=>x.ziehtName);
+  $("adminStatus").textContent=gezogen?"das Los ist gezogen":"noch nicht gezogen";
+  $("bZiehen").textContent=gezogen?"Nochmals neu ziehen":"Das Los ziehen";
+  $("iHinweis").value=st.hinweis||"";
+  adminStatusDaten=st||{};
+  $("aufloesungAdmin").hidden=!gezogen;
+  $("bCsvMitLos").hidden=!gezogen;
+  $("bFreigeben").textContent=st.aufgeloest?"Auflösung wieder verbergen":"Auflösung für alle freigeben";
+  $("freigebenBestaetigen").hidden=true;
+  $("kreisAdminBox").hidden=true; $("bKreisZeigen").setAttribute("aria-expanded","false"); $("bKreisZeigen").textContent="Wer beschenkt wen? Anzeigen";
+  if(gezogen) kreisMalen($("kreisAdmin"),kreisAusListe(liste));
+  const ul=$("liste"); ul.textContent="";
+  if(!liste.length){ const li=document.createElement("li"); li.className="leer"; li.textContent="Der Sack ist noch leer. Schick den QR-Code in den Familienchat."; ul.append(li); }
+  for(const p of liste){
+    const li=document.createElement("li");
+    const wer=document.createElement("span"); wer.className="wer"; wer.textContent=p.name;
+    const weg=document.createElement("button"); weg.className="link"; weg.type="button"; weg.textContent="entfernen"; weg.style.fontSize=".85rem";
+    weg.addEventListener("click",async()=>{
+      if(weg.dataset.sicher!=="1"){ weg.dataset.sicher="1"; weg.textContent="wirklich entfernen?"; return; }
+      await api.entfernen(liste,p.id); toast(p.name+" entfernt"); adminLaden();
+    });
+    const was=document.createElement("span"); was.className="was"; was.textContent=p.wunsch||"";
+    const pa=document.createElement("label"); pa.className="partner";
+    const sel=document.createElement("select"); sel.id="partner-"+p.id;
+    const leer=document.createElement("option"); leer.value=""; leer.textContent="kein Paar"; sel.append(leer);
+    for(const q of liste){ if(q.id===p.id) continue; const o=document.createElement("option"); o.value=q.id; o.textContent=q.name; if(p.partner===q.id) o.selected=true; sel.append(o); }
+    sel.addEventListener("change",async()=>{ await api.partnerSetzen(liste,p.id,sel.value||null); toast("Paar gespeichert"); adminLaden(); });
+    pa.append("Paar mit",sel);
+    li.append(wer,weg,was,pa); ul.append(li);
+  }
+  qrZeichnen();
+}
+
+$("fLogin").addEventListener("submit",async e=>{
+  e.preventDefault(); fehler("eLogin");
+  try{ await api.login($("iMail").value.trim(),$("iPw").value); }
+  catch(err){ fehler("eLogin","E-Mail oder Passwort stimmen nicht."); }
+});
+$("bLogout").addEventListener("click",()=>api.logout());
+$("bHinweis").addEventListener("click",async()=>{ await api.hinweisSetzen($("iHinweis").value.trim()); toast("Hinweis gespeichert"); });
+
+$("bZiehen").addEventListener("click",()=>{
+  fehler("eZiehen");
+  const gezogen=liste.some(x=>x.ziehtName);
+  $("ziehenText").textContent = gezogen
+    ? "Alle bekommen ein neues Los. Wer sein altes schon gesehen hat, muss nochmals schauen. Sicher?"
+    : `${liste.length} Namen sind im Sack. Danach sieht jede und jeder sein Los. Jetzt ziehen?`;
+  $("ziehenBestaetigen").hidden=false;
+});
+$("bZiehenNein").addEventListener("click",()=>$("ziehenBestaetigen").hidden=true);
+$("bZiehenJa").addEventListener("click",async()=>{
+  $("ziehenBestaetigen").hidden=true;
+  try{ const paare=ziehen(liste); await api.ziehungSpeichern(paare); toast("Das Los ist gefallen"); adminLaden(); }
+  catch(err){ fehler("eZiehen",err.message||"Ziehen hat nicht geklappt."); }
+});
+
+/* Auflösung steuern */
+$("bKreisZeigen").addEventListener("click",()=>{
+  const box=$("kreisAdminBox"), auf=box.hidden;
+  box.hidden=!auf;
+  $("bKreisZeigen").setAttribute("aria-expanded",String(auf));
+  $("bKreisZeigen").textContent=auf?"Wieder verstecken":"Wer beschenkt wen? Anzeigen";
+});
+$("bFreigeben").addEventListener("click",async()=>{
+  if(adminStatusDaten.aufgeloest){
+    try{ await api.verbergen(); toast("Auflösung wieder verborgen"); adminLaden(); }
+    catch(err){ console.error(err); toast("Das hat nicht geklappt"); }
+    return;
+  }
+  $("freigebenText").textContent="Ab jetzt sehen alle auf der Wichtelseite, wer wen beschenkt hat. Am besten erst am Fest, wenn die Päckli offen sind.";
+  $("freigebenBestaetigen").hidden=false;
+});
+$("bFreigebenNein").addEventListener("click",()=>$("freigebenBestaetigen").hidden=true);
+$("bFreigebenJa").addEventListener("click",async()=>{
+  try{ await api.aufloesen(kreisAusListe(liste)); toast("Die Auflösung ist für alle sichtbar"); adminLaden(); }
+  catch(err){ console.error(err); toast("Freigeben hat nicht geklappt"); }
+});
+$("bCsv").addEventListener("click",()=>csvSpeichern(false));
+$("bCsvMitLos").addEventListener("click",()=>csvSpeichern(true));
+
+/* QR-Code */
+function seitenLink(){ return location.origin+location.pathname; }
+function qrZeichnen(){
+  const box=$("qr"); box.textContent="";
+  if(typeof QRCode==="undefined"){ box.textContent="QR-Code konnte nicht geladen werden."; return; }
+  new QRCode(box,{text:seitenLink(),width:260,height:260,colorDark:"#13241e",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+}
+$("bQrLaden").addEventListener("click",()=>{
+  const c=$("qr").querySelector("canvas"); if(!c) return;
+  // Bild mit Rand und Titel für den Familienchat
+  const W=600,H=720, k=document.createElement("canvas"); k.width=W; k.height=H; const g=k.getContext("2d");
+  g.fillStyle="#13241e"; g.fillRect(0,0,W,H);
+  g.fillStyle="#e2b85c"; g.font="700 20px Figtree, sans-serif"; g.textAlign="center"; g.fillText("FAMILIE ACKERMANN · WEIHNACHTEN 2026",W/2,60);
+  g.fillStyle="#eef1ec"; g.font="52px Gloock, Georgia, serif"; g.fillText("Wichteln",W/2,124);
+  g.fillStyle="#ffffff"; g.fillRect(110,160,380,380); g.imageSmoothingEnabled=false; g.drawImage(c,130,180,340,340);
+  g.fillStyle="#eef1ec"; g.font="500 22px Figtree, sans-serif"; g.fillText("Scannen, Namen eintragen, Wunsch notieren.",W/2,600);
+  g.fillStyle="#9db1a6"; g.font="18px Figtree, sans-serif"; g.fillText("Budget höchstens CHF 50.–",W/2,640);
+  const a=document.createElement("a"); a.href=k.toDataURL("image/png"); a.download="Ackermann-Wichteln-QR.png"; document.body.append(a); a.click(); a.remove();
+});
+$("bTextKopieren").addEventListener("click",()=>kopieren(
+`🎄 Ackermann-Wichteln 2026 🎄
+Dieses Jahr beschenkt jeder nur einen, dafür mit ganzem Herzen.
+Trag dich ein und verrat deinem Wichtel einen Wunsch oder Tipp (max. CHF 50.–):
+${seitenLink()}`,"Einladungstext kopiert"));
+
+/* ---------- Start ---------- */
+async function route(){
+  if(location.hash==="#stube"){
+    ansicht("admin");
+    api.onAuth(drin=>{ $("fLogin").hidden=drin; $("adminInhalt").hidden=!drin; if(drin) adminLaden(); });
+    return;
+  }
+  ansicht("anmelden");
+  const st=await hinweisLaden();
+  $("vAufloesung").hidden=true;
+  if(st.aufgeloest){
+    const kreis=await api.aufloesung();
+    if(kreis && kreis.length){ kreisMalen($("kreisOeffentlich"),kreis); $("vAufloesung").hidden=false; }
+  }
+  const id=lsGet(SPEICHER_KEY);
+  if(id){ try{ if(!(await meinLaden(id))) lsDel(SPEICHER_KEY); }catch(e){ console.error(e); } }
+}
+window.addEventListener("hashchange",route);
+route();
+
+/* ---------- Scherenschnitt & Sterne ---------- */
+const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function zufall(seed){ return ()=>{ seed=(seed*16807)%2147483647; return (seed-1)/2147483646; }; }
+
+function scherenschnitt(){
+  const c=$("scherenschnitt"), dpr=Math.min(2,devicePixelRatio||1);
+  const W=c.clientWidth, H=c.clientHeight; c.width=W*dpr; c.height=H*dpr;
+  const g=c.getContext("2d"); g.scale(dpr,dpr); g.clearRect(0,0,W,H);
+  const papier=getComputedStyle(document.documentElement).getPropertyValue("--schnee").trim()||"#eef1ec";
+  const nacht=getComputedStyle(document.documentElement).getPropertyValue("--nacht").trim()||"#13241e";
+  const r=zufall(7);
+  g.fillStyle=papier;
+  // Hügel
+  g.beginPath(); g.moveTo(0,H);
+  for(let x=0;x<=W;x+=8){ g.lineTo(x,H-34-Math.sin(x/90)*8-Math.sin(x/37)*3); }
+  g.lineTo(W,H); g.closePath(); g.fill();
+  // Tannen
+  function tanne(x,y,h){
+    const w=h*.42, stufen=4;
+    g.beginPath();
+    for(let i=0;i<stufen;i++){
+      const ty=y-h+i*h/stufen*.85, by=ty+h/stufen*1.25, bw=w*(.45+i*.2);
+      g.moveTo(x,ty); g.lineTo(x+bw/2,by); g.lineTo(x-bw/2,by); g.closePath();
+    }
+    g.fill(); g.fillRect(x-h*.04,y-h*.08,h*.08,h*.12);
+  }
+  // Bauernhaus mit warmem Fenster (Emmentaler Dach)
+  function haus(x,y){
+    const w=118,h=46;
+    g.fillStyle=papier;
+    g.beginPath(); g.moveTo(x-w/2-16,y-h); g.lineTo(x,y-h-48); g.lineTo(x+w/2+16,y-h); g.lineTo(x+w/2+6,y-h+12); g.lineTo(x-w/2-6,y-h+12); g.closePath(); g.fill();
+    g.fillRect(x-w/2,y-h,w,h);
+    g.fillRect(x+22,y-h-50,10,22); // Kamin
+    g.fillStyle="#e2b85c";
+    for(const fx of [-38,-14,10,34]) g.fillRect(x+fx-7,y-h+18,14,14);
+    g.fillStyle=nacht; g.fillRect(x-6,y-18,12,18); // Tür
+    g.beginPath(); g.arc(x,y-h-22,7,0,Math.PI*2); g.fill(); // Rundfenster im Giebel
+    g.fillStyle=papier;
+  }
+  const hausX=Math.min(W*.68,W-110);
+  for(let x=10;x<W;x+=26+r()*30){
+    if(Math.abs(x-hausX)<90) continue;
+    const h=46+r()*58; const y=H-30-Math.sin(x/90)*8;
+    tanne(x,y,h);
+  }
+  haus(hausX,H-30-Math.sin(hausX/90)*8);
+  // Schlitten mit Geschenk (links)
+  const sx=Math.max(40,W*.16), sy=H-24;
+  g.fillRect(sx-30,sy-10,60,8);
+  g.beginPath(); g.moveTo(sx-34,sy); g.lineTo(sx+30,sy); g.quadraticCurveTo(sx+42,sy,sx+40,sy-10); g.lineTo(sx+36,sy-10); g.quadraticCurveTo(sx+36,sy-4,sx+28,sy-4); g.lineTo(sx-34,sy-4); g.closePath(); g.fill();
+  g.fillStyle="#c8262c"; g.fillRect(sx-16,sy-34,30,24);
+  g.fillStyle=papier; g.fillRect(sx-3,sy-34,4,24); g.fillRect(sx-16,sy-24,30,4);
+}
+
+function sterne(){
+  const c=$("sterne"), dpr=Math.min(2,devicePixelRatio||1);
+  const W=c.clientWidth, H=c.clientHeight; c.width=W*dpr; c.height=H*dpr;
+  const g=c.getContext("2d"); g.scale(dpr,dpr);
+  const r=zufall(42), punkte=[];
+  for(let i=0;i<Math.round(W*H/5200);i++) punkte.push({x:r()*W,y:r()*H*.8,s:.6+r()*1.4,p:r()*6.28});
+  function malen(t){
+    g.clearRect(0,0,W,H);
+    for(const p of punkte){ const a=still?.7:.35+.45*(1+Math.sin(t/900+p.p))/2; g.fillStyle=`rgba(238,241,236,${a})`; g.beginPath(); g.arc(p.x,p.y,p.s,0,6.28); g.fill(); }
+    if(!still) requestAnimationFrame(malen);
+  }
+  malen(0);
+}
+function zeichnen(){ scherenschnitt(); }
+zeichnen(); sterne();
+let rt; addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(zeichnen,150); });
+if(document.fonts) document.fonts.ready.then(()=>{});
+})();
+</script>
+</body>
+</html>
