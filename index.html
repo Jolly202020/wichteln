@@ -3,201 +3,211 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Ackermann Wichteln 2026</title>
+<title>Ackermanns &amp; Peters Wichteln</title>
 <meta name="description" content="Das Weihnachtswichteln der Familie Ackermann. Name in den Sack, Wunsch auf den Zettel, und am Fest wird beschenkt.">
-<meta name="theme-color" content="#13241e">
+<meta name="theme-color" content="#a3302a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;700&family=DM+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@500&display=swap">
 <style>
-/* Layout: eine Winternacht. Scherenschnitt-Hero oben, darunter ein schneeweisser Wunschzettel als einzige Karte. Bewusst nur ein (dunkles) Farbschema. */
+/* Layout: Das Päckli. Oben ein grosser roter Block, von einem goldenen Band umwickelt; darunter helles Papier mit klarer, ruhiger Typografie. Bewusst ein einziges helles Farbschema. */
 :root{
-  --nacht:#13241e;      /* Tannennacht, Seitengrund */
-  --nacht-2:#1b3229;    /* leicht hellere Flächen auf Nacht */
-  --schnee:#eef1ec;     /* Papier, Scherenschnitt, Karte */
-  --tinte:#15221c;      /* Text auf Schnee */
-  --rot:#c8262c;        /* Schweizer Rot, Aktionen */
-  --kerze:#e2b85c;      /* Kerzenlicht, kleine Akzente */
-  --nebel:#9db1a6;      /* gedämpfter Text auf Nacht */
-  --linie:#cfd8d1;      /* Linien auf Schnee */
-  --f-display:"Gloock", "Georgia", "Times New Roman", serif;
-  --f-text:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --f-mono:"DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  color-scheme:dark;
+  --papier:#f6f1ea;   /* Seitengrund, warmes Packpapier-Hell */
+  --weiss:#fffdf9;    /* Karten */
+  --rot:#b1241c;      /* Weihnachtsrot: Päckli, Aktionen */
+  --rot-dunkel:#8f1b15;
+  --gold:#e3b258;     /* Geschenkband */
+  --tanne:#1e3b2f;    /* Tannengrün: Los-Rückseite, Schlüssel */
+  --tinte:#221d19;    /* Text */
+  --grau:#756b62;     /* Nebentext */
+  --linie:#e6dcd0;
+  --feld:#f8f4ee;     /* Eingabefelder */
+  --f-display:"Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --f-text:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"DM Mono", ui-monospace, Menlo, monospace;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
-html{background:var(--nacht)}
-body{margin:0;background:var(--nacht);color:var(--schnee);font:16px/1.6 var(--f-text);-webkit-font-smoothing:antialiased;
+html{background:var(--rot-dunkel)}
+body{margin:0;background:transparent;color:var(--tinte);font:16px/1.6 var(--f-text);-webkit-font-smoothing:antialiased;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 [hidden]{display:none!important}
-img{max-width:100%}
 a{color:inherit}
 button,input,textarea,select{font:inherit}
-:focus-visible{outline:3px solid var(--kerze);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{max-width:640px;margin:0 auto;padding-inline:20px}
+.leise-text{color:var(--grau)}
 
-.wrap{max-width:600px;margin:0 auto;padding-inline:20px}
-
-/* ---------- Hero ---------- */
-.hero{position:relative;overflow:hidden;padding-block:56px 0}
-.sterne{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--kerze);font-weight:700;margin:0 0 14px}
-h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.6rem,10vw,4.4rem);line-height:.98;margin:0;text-wrap:balance;letter-spacing:-.01em}
-h1 em{font-style:normal;color:var(--kerze)}
-.lead{font-size:1.12rem;color:var(--schnee);max-width:34em;margin:22px 0 0;text-wrap:pretty}
-.lead + .lead{margin-top:12px}
-.lead .leise{color:var(--nebel)}
-.scherenschnitt{display:block;width:100%;height:150px;margin-top:36px}
+/* ---------- Hero: das Päckli ---------- */
+/* Foto als ruhiger Hintergrund der ganzen Seite (fixiert, auch auf dem Handy) */
+.hintergrund{position:fixed;inset:0;z-index:-2;background-color:var(--rot-dunkel);
+  background-image:linear-gradient(180deg,rgba(28,12,8,.25) 0%,rgba(28,12,8,.55) 35%,rgba(28,12,8,.72) 100%),url("https://images.unsplash.com/photo-1461092678334-1aa3ab3543ce?auto=format&fit=crop&w=1800&q=80");
+  background-size:cover;background-position:center 35%}
+.glitzer{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
+.hero{position:relative;color:var(--weiss);padding-block:clamp(90px,20vw,170px) clamp(10px,3vw,24px)}
+.fotonachweis{color:inherit;opacity:.8;text-decoration:none;font-size:.75rem}
+.fotonachweis:hover{opacity:1;text-decoration:underline}
+.hero .wrap > *{max-width:30em}
+.eyebrow{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;margin:0 0 18px;color:var(--gold)}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(3.2rem,13vw,5.6rem);line-height:.92;letter-spacing:-.02em;margin:0;text-wrap:balance;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+h1 em{font-style:italic;color:var(--gold)}
+.unterzeile{font-size:clamp(1.05rem,3.6vw,1.2rem);font-weight:500;margin:22px 0 0;max-width:22em;opacity:.95}
 
 /* ---------- Kapitel ---------- */
-.kapitel{list-style:none;margin:0;padding:28px 0 8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;counter-reset:k}
-.kapitel li{counter-increment:k;min-width:0}
-.kapitel li::before{content:"Kapitel " counter(k);display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--kerze);font-weight:700;margin-bottom:4px}
-.kapitel b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.15rem;line-height:1.2}
-.kapitel span{display:block;color:var(--nebel);font-size:.88rem;line-height:1.45;margin-top:4px}
-@media (max-width:520px){.kapitel{grid-template-columns:1fr;gap:16px}}
+.kapitel{list-style:none;margin:0;padding:44px 0 6px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;counter-reset:k}
+.kapitel li{counter-increment:k;min-width:0;border-top:2px solid rgba(255,253,249,.55);padding-top:12px;color:var(--weiss)}
+.kapitel li::before{content:counter(k);display:block;font-family:var(--f-display);font-size:2.4rem;line-height:1;color:var(--gold);margin-bottom:8px}
+.kapitel b{display:block;font-weight:700;font-size:1rem;line-height:1.3}
+.kapitel span{display:block;color:rgba(255,253,249,.85);font-size:.9rem;line-height:1.5;margin-top:6px}
+@media (max-width:560px){.kapitel{grid-template-columns:1fr;gap:18px}.kapitel li{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:10px}.kapitel li::before{grid-row:1/3;margin:0}}
 
-/* ---------- Wunschzettel (Karte) ---------- */
-.zettel{position:relative;background:var(--schnee);color:var(--tinte);border-radius:6px;padding:30px 24px 28px;margin-block:28px 18px;
-  box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
-.zettel::before{ /* gestanzter Rand oben, wie vom Block gerissen */
-  content:"";position:absolute;left:0;right:0;top:-7px;height:14px;
-  background:radial-gradient(circle at 7px 7px,var(--nacht) 5px,transparent 5.5px) 0 0/18px 14px repeat-x}
-.zettel h2{font-family:var(--f-display);font-weight:400;font-size:1.9rem;line-height:1.1;margin:0 0 6px;text-wrap:balance}
-.zettel .sub{margin:0 0 22px;color:#4a5a52}
-.feld{display:grid;gap:6px;margin-bottom:18px}
+/* ---------- Karten ---------- */
+.zettel,.aufloesung-oeffentlich{background:rgba(255,253,249,.97);border:1px solid rgba(255,255,255,.6);box-shadow:0 24px 60px -24px rgba(0,0,0,.55);border-radius:20px;padding:30px 24px 28px;margin-block:30px 18px}
+.zettel h2,.aufloesung-oeffentlich h2{font-family:var(--f-display);font-weight:400;font-size:2.3rem;line-height:1.02;letter-spacing:-.01em;margin:0 0 8px;text-wrap:balance}
+.zettel h3{font-family:var(--f-display);font-weight:400;font-size:1.55rem;line-height:1.1;margin:0 0 4px}
+.sub{margin:0 0 24px;color:var(--grau)}
+.aufloesung-oeffentlich{border-top:8px solid var(--rot)}
+.aufloesung-oeffentlich .eyebrow{color:var(--rot);margin-bottom:10px}
+
+.feld{display:grid;gap:7px;margin-bottom:20px}
 .feld label{font-weight:700;font-size:.95rem}
-.feld .hilfe{font-size:.86rem;color:#58675f;margin-top:-2px}
+.hilfe{font-size:.87rem;color:var(--grau);margin:-2px 0 0}
 input[type=text],input[type=email],input[type=password],textarea,select{
-  width:100%;border:0;border-bottom:2px solid var(--linie);background:transparent;color:var(--tinte);
-  padding:10px 2px;border-radius:0;font-size:1.05rem;transition:border-color .2s}
-textarea{min-height:96px;resize:vertical;line-height:1.5;
-  background-image:repeating-linear-gradient(transparent 0 calc(1.5em - 1px),var(--linie) calc(1.5em - 1px) 1.5em);
-  background-position:0 10px;border-bottom-color:transparent}
-input:focus,textarea:focus,select:focus{outline:none;border-bottom-color:var(--rot)}
-select{border:2px solid var(--linie);border-radius:6px;padding:8px 10px;font-size:.95rem;background:#fff}
-.budget{display:flex;align-items:center;gap:14px;border:2px dashed var(--rot);border-radius:6px;padding:12px 14px;margin:4px 0 22px}
-.budget .betrag{font-family:var(--f-display);font-size:1.7rem;color:var(--rot);white-space:nowrap;line-height:1}
-.budget p{margin:0;font-size:.92rem;line-height:1.45;min-width:0;flex:1 1 200px}
-.budget{flex-wrap:wrap}
+  width:100%;border:1.5px solid var(--linie);background:var(--feld);color:var(--tinte);
+  padding:13px 14px;border-radius:12px;font-size:1rem;transition:border-color .2s,background .2s}
+textarea{min-height:110px;resize:vertical;line-height:1.5}
+input::placeholder,textarea::placeholder{color:#a69b90}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--rot);background:var(--weiss)}
+select{width:auto;max-width:100%;padding:8px 12px;font-size:.9rem}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:14px 26px;
-  background:var(--rot);color:#fff;font-weight:700;font-size:1.02rem;cursor:pointer;transition:transform .15s,filter .15s}
-.btn:hover{filter:brightness(1.08)}
+.budget{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;background:var(--papier);border-radius:14px;padding:16px 18px;margin:4px 0 22px}
+.betrag{font-family:var(--f-display);font-size:2.8rem;line-height:1;color:var(--rot);white-space:nowrap;display:flex;align-items:baseline;gap:6px}
+.betrag small{font-family:var(--f-text);font-size:.8rem;font-weight:800;letter-spacing:.12em;color:var(--tinte)}
+.zeitung-icon{flex:none;width:52px;height:40px;border-radius:4px;background-color:#ebe5d8;background-image:linear-gradient(var(--rot),var(--rot)),repeating-linear-gradient(0deg,transparent 0 4px,rgba(60,50,40,.3) 4px 5px);background-size:100% 6px,100% 100%;background-position:0 0,0 0;background-repeat:no-repeat,repeat;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.budget p{margin:0;font-size:.9rem;line-height:1.45;flex:1 1 210px;min-width:0}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:15px 26px;
+  background:var(--rot);color:var(--weiss);font-weight:700;font-size:1rem;cursor:pointer;transition:background .15s,transform .15s}
+.btn:hover{background:var(--rot-dunkel)}
 .btn:active{transform:translateY(1px)}
-.btn[disabled]{opacity:.55;cursor:wait}
+.btn[disabled]{opacity:.6;cursor:wait}
 .btn.voll{width:100%}
-.btn.leise{background:transparent;color:var(--tinte);border:2px solid var(--linie)}
-.btn.klein{padding:8px 14px;font-size:.88rem}
-.link{background:none;border:0;padding:0;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-.fehler{color:var(--rot);font-weight:500;font-size:.92rem;margin:10px 0 0}
-
-/* Code-Anzeige */
-.code{font-family:var(--f-mono);font-size:1.5rem;letter-spacing:.08em;background:var(--tinte);color:var(--kerze);
-  border-radius:6px;padding:12px 14px;text-align:center;margin:8px 0;word-break:break-all;user-select:all}
+.btn.leise{background:transparent;color:var(--tinte);border:1.5px solid var(--linie)}
+.btn.leise:hover{background:var(--papier)}
+.btn.klein{padding:9px 15px;font-size:.88rem;border-radius:11px}
+.link{background:none;border:0;padding:0;color:inherit;font-weight:600;text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:4px;cursor:pointer}
+.fehler{color:var(--rot);font-weight:600;font-size:.92rem;margin:10px 0 0}
 .zeile{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+hr.trenner{border:0;border-top:1px solid var(--linie);margin:26px 0}
 
-/* Aufdecken */
-.los{position:relative;margin-top:18px;border-radius:8px;min-height:170px;perspective:900px;cursor:pointer}
-.los-innen{position:relative;width:100%;min-height:170px;transition:transform .7s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
-.los.offen .los-innen{transform:rotateY(180deg)}
-.los-seite{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:8px;padding:22px;display:flex;flex-direction:column;justify-content:center}
-.los-vorne{background:var(--rot);color:#fff;align-items:center;text-align:center;
-  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 10px,transparent 10px 20px)}
-.los-vorne b{font-family:var(--f-display);font-weight:400;font-size:1.5rem}
-.los-hinten{background:var(--tinte);color:var(--schnee);transform:rotateY(180deg)}
-.los-hinten .name{font-family:var(--f-display);font-size:2rem;line-height:1.1;color:var(--kerze);margin:2px 0 10px}
-.los-hinten .wunsch{white-space:pre-wrap;margin:0;font-size:.98rem}
-.los.offen{min-height:var(--los-h,170px)}
+.code{font-family:var(--f-mono);font-size:1.4rem;letter-spacing:.1em;background:var(--tanne);color:var(--gold);
+  border-radius:12px;padding:14px;text-align:center;margin:10px 0;word-break:break-all;user-select:all}
 
-.status{display:flex;gap:12px;align-items:flex-start;background:#e3e9e3;border-radius:6px;padding:14px;margin-top:16px}
-.status .punkt{flex:none;width:10px;height:10px;border-radius:50%;background:var(--kerze);margin-top:8px;box-shadow:0 0 0 4px rgba(226,184,92,.25)}
+.status{display:flex;gap:12px;align-items:flex-start;background:var(--papier);border-radius:14px;padding:15px 16px;margin-top:16px}
+.status .punkt{flex:none;width:10px;height:10px;border-radius:50%;background:var(--rot);margin-top:8px}
 .status p{margin:0}
 
-hr.trenner{border:0;border-top:1px solid var(--linie);margin:24px 0}
+/* Los = Päckli zum Auspacken */
+.los{margin-top:16px;border-radius:16px;perspective:1000px;cursor:pointer}
+.los-innen{position:relative;width:100%;min-height:210px;transition:transform .8s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.los.offen .los-innen{transform:rotateY(180deg)}
+.los-seite{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.los-vorne{color:var(--tinte);align-items:center;text-align:center;isolation:isolate;
+  background-color:#ebe5d8;
+  background-image:
+    repeating-linear-gradient(0deg,transparent 0 7px,rgba(60,50,40,.16) 7px 8px),
+    repeating-linear-gradient(90deg,transparent 0 calc(25% - 6px),#ebe5d8 calc(25% - 6px) 25%);
+  box-shadow:inset 0 0 40px rgba(90,70,40,.18)}
+.los-vorne::before,.los-vorne::after{content:"";position:absolute;background:var(--rot);z-index:-1}
+.los-vorne::before{top:0;bottom:0;left:50%;width:16px;transform:translateX(-50%)}
+.los-vorne::after{left:0;right:0;top:50%;height:16px;transform:translateY(-50%)}
+.los-vorne .titel{position:absolute;top:10px;left:10px;right:10px;font-family:var(--f-display);font-size:.82rem;letter-spacing:.08em;color:#4a4036;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid rgba(60,50,40,.35);padding-bottom:4px;background:#ebe5d8}
+.los-vorne b{font-family:var(--f-display);font-weight:400;font-size:1.4rem;line-height:1.15;background:#ebe5d8;padding:4px 14px;border-radius:8px}
+.los-vorne span.psst{background:#ebe5d8;padding:2px 10px;border-radius:6px;font-size:.88rem;margin-top:6px}
+.los-hinten{background:var(--tanne);color:var(--weiss);transform:rotateY(180deg)}
+.klein-label{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+.los-hinten .name{font-family:var(--f-display);font-size:2.5rem;line-height:1.05;margin:4px 0 10px}
+.los-hinten .wunsch{white-space:pre-wrap;margin:0;font-size:.98rem;opacity:.92}
 
-/* Fuss */
-.fuss{color:var(--nebel);font-size:.88rem;padding-block:6px 48px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
-.fuss .link{color:var(--nebel)}
-
-.demo{background:var(--kerze);color:var(--tinte);font-size:.85rem;text-align:center;padding:8px 16px}
-
-/* ---------- Admin ---------- */
-.liste{list-style:none;margin:0;padding:0;display:grid;gap:0}
-.liste li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:14px 0;border-bottom:1px solid var(--linie);align-items:start}
-.liste .wer{font-weight:700}
-.liste .was{grid-column:1/-1;color:#4a5a52;font-size:.92rem;white-space:pre-wrap;min-width:0;overflow-wrap:anywhere}
-.liste .partner{grid-column:1/-1;display:flex;gap:8px;align-items:center;font-size:.88rem;flex-wrap:wrap}
-.liste .partner select{width:auto;max-width:100%}
-.zahl{font-variant-numeric:tabular-nums}
-.qr-box{display:grid;place-items:center;background:#fff;border-radius:8px;padding:18px;margin:12px 0}
-.qr-box img,.qr-box canvas{display:block;max-width:100%;height:auto}
-.leer{color:#58675f;font-style:italic;padding:12px 0}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tinte);color:var(--schnee);
-  border:1px solid var(--kerze);padding:10px 18px;border-radius:999px;font-size:.92rem;z-index:10;max-width:calc(100% - 32px)}
-
-/* Auflösung: der Wichtelkreis */
-.kreis{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:0}
-.kreis li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--linie)}
+/* Auflösung */
+.kreis{list-style:none;margin:18px 0 0;padding:0}
+.kreis li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--linie)}
 .kreis li:last-child{border-bottom:0}
 .kreis .von{font-weight:700;min-width:0;overflow-wrap:anywhere}
-.kreis .an{font-family:var(--f-display);font-size:1.15rem;min-width:0;overflow-wrap:anywhere;text-align:right}
-.kreis .pfeil{color:var(--rot);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;white-space:nowrap}
-.aufloesung-oeffentlich{background:var(--schnee);color:var(--tinte);border-radius:6px;padding:26px 24px;margin-block:28px 18px;border-top:6px solid var(--kerze)}
-.aufloesung-oeffentlich h2{font-family:var(--f-display);font-weight:400;font-size:1.9rem;line-height:1.1;margin:0 0 6px}
-.aufloesung-oeffentlich .sub{margin:0;color:#4a5a52}
-.geheim{background:#e3e9e3;border-radius:6px;padding:4px 14px;margin-top:12px}
+.kreis .an{font-family:var(--f-display);font-size:1.35rem;min-width:0;overflow-wrap:anywhere;text-align:right}
+.kreis .pfeil{color:var(--rot);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;white-space:nowrap}
+.geheim{background:var(--papier);border-radius:14px;padding:2px 16px;margin-top:12px}
+
+/* Wichtelstube */
+.liste{list-style:none;margin:8px 0 0;padding:0}
+.liste li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:14px 0;border-bottom:1px solid var(--linie);align-items:start}
+.liste .wer{font-weight:700}
+.liste .was{grid-column:1/-1;color:var(--grau);font-size:.92rem;white-space:pre-wrap;min-width:0;overflow-wrap:anywhere}
+.liste .partner{grid-column:1/-1;display:flex;gap:8px;align-items:center;font-size:.88rem;flex-wrap:wrap}
+.zahl{font-variant-numeric:tabular-nums}
+.qr-box{display:grid;place-items:center;background:#fff;border:1px solid var(--linie);border-radius:16px;padding:18px;margin:14px 0}
+.qr-box img,.qr-box canvas{display:block;max-width:100%;height:auto}
+.leer{color:var(--grau);font-style:italic;padding:12px 0}
+
+.fuss{color:rgba(255,253,249,.85);font-size:.88rem;padding-block:8px 52px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
+.demo{background:var(--gold);color:var(--tinte);font-size:.85rem;text-align:center;padding:8px 16px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tinte);color:var(--weiss);
+  padding:11px 18px;border-radius:12px;font-size:.92rem;z-index:10;max-width:calc(100% - 32px)}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
+<div class="hintergrund" aria-hidden="true"></div>
+<canvas class="glitzer" id="glitzer" aria-hidden="true"></canvas>
 
 <div class="demo" id="demoBanner" hidden>Demo-Modus: Alles wird nur in diesem Browser gespeichert. Für die Familie zuerst Firebase einrichten (siehe Anleitung).</div>
 
 <header class="hero">
-  <canvas class="sterne" id="sterne" aria-hidden="true"></canvas>
-  <div class="wrap" style="position:relative">
-    <p class="eyebrow">Familie Ackermann · Weihnachten 2026</p>
-    <h1>Einer zieht.<br>Einer <em>staunt.</em></h1>
-    <p class="lead">Es war einmal eine Familie, die jedes Jahr an Heiligabend unter einem Berg Geschenkpapier verschwand. Bis jemand sagte: Jeder beschenkt nur einen. Dafür mit ganzem Herzen.</p>
-    <p class="lead"><span class="leise">Seit dem Ja-Wort gehört auch ein Peter zu den Ackermanns. Willkommen im Sack, Fabian.</span></p>
+  <div class="wrap">
+    <p class="eyebrow">Weihnachten 2026</p>
+    <h1>Das Wichteln<br><em>geht los.</em></h1>
+    <p class="unterzeile">Die Ackermanns und Peters ziehen wieder.</p>
   </div>
-  <canvas class="scherenschnitt" id="scherenschnitt" aria-hidden="true"></canvas>
 </header>
 
 <main class="wrap">
 
   <ol class="kapitel" aria-label="So läuft das Wichteln">
-    <li><b>Der Name kommt in den Sack</b><span>Du trägst dich ein und schreibst einen Wunsch oder Tipp dazu.</span></li>
-    <li><b>Das Los fällt</b><span>Wenn alle dabei sind, wird gezogen. Du siehst nur, wen du beschenkst.</span></li>
-    <li><b>Das Fest</b><span>Unter dem Christbaum wird das Geheimnis gelüftet.</span></li>
+    <li><b>Dein Name kommt in den Sack</b><span>Trag dich ein und verrat deinem Wichtel, worüber du dich freuen würdest.</span></li>
+    <li><b>Das Los fällt</b><span>Sobald alle dabei sind, wird gezogen. Ab dann gilt: nichts verraten, auch nicht beim Guetzlibacken.</span></li>
+    <li><b>Das Fest</b><span>An Weihnachten liegen die Päckli unter dem Weihnachtsbaum. Beim Auspacken wird geraten, wer der Wichtel war, und dann wird das Geheimnis gelüftet.</span></li>
   </ol>
 
   <!-- 0) Grosse Auflösung (erscheint, sobald die Wichtelmeisterin sie freigibt) -->
   <section class="aufloesung-oeffentlich" id="vAufloesung" aria-labelledby="hAufloesung" hidden>
     <p class="eyebrow" style="margin-bottom:8px">Die grosse Auflösung</p>
-    <h2 id="hAufloesung">Der Wichtelkreis ist geschlossen.</h2>
-    <p class="sub">Jeder hat einen beschenkt, und jeder wurde beschenkt. So lief der Kreis dieses Jahr:</p>
+    <h2 id="hAufloesung">Und das waren die Wichtel!</h2>
+    <p class="sub">Danke für all die Päckli, das Rätseln und das Lachen. So lief der Wichtelkreis dieses Jahr:</p>
     <ol class="kreis" id="kreisOeffentlich"></ol>
   </section>
 
   <!-- 1) Anmelden -->
   <section class="zettel" id="vAnmelden" aria-labelledby="hAnmelden">
     <h2 id="hAnmelden">Dein Wunschzettel</h2>
-    <p class="sub" id="hinweisText">Schreib dich ein, bevor das Los gezogen wird.</p>
+    <p class="sub" id="hinweisText">Ein paar Zeilen genügen, und dein Wichtel wird dir danken.</p>
     <form id="fAnmelden" novalidate>
       <div class="feld">
         <label for="iName">Wer bist du?</label>
-        <input type="text" id="iName" maxlength="40" autocomplete="given-name" placeholder="z. B. Grosi oder Fabian Peter" required>
+        <input type="text" id="iName" maxlength="40" autocomplete="given-name" placeholder="Vor- und Nachname" required>
       </div>
       <div class="feld">
-        <label for="iWunsch">Ein Wunsch, ein Tipp, ein Wink mit dem Zaunpfahl</label>
-        <p class="hilfe">Lieblingsschoggi, Hobby, Kleidergrösse, «bitte keine Socken». Alles hilft deinem Wichtel.</p>
-        <textarea id="iWunsch" maxlength="300" placeholder="Ich lese gerade gern Krimis aus dem Emmental und trinke Tee ohne Ende …" required></textarea>
+        <label for="iWunsch">Dein Wunsch oder Tipp für den Wichtel</label>
+        <p class="hilfe">Lieblingsschoggi, Hobby, Kleidergrösse oder «bitte keine Unterhosen» (gell, Franz). Alles hilft deinem Wichtel.</p>
+        <textarea id="iWunsch" maxlength="300" placeholder="Ich mag Krimis, feinen Tee und alles, was nach Zimt duftet …" required></textarea>
       </div>
       <div class="budget">
-        <span class="betrag">CHF 50.–</span>
+        <span class="betrag"><small>CHF</small>50.–</span>
         <p><b>Höchstens.</b> Mehr Herz als Franken: Selbstgemachtes, Erlebtes und Gefundenes zählen doppelt.</p>
+      </div>
+      <div class="budget zeitung-regel">
+        <span class="zeitung-icon" aria-hidden="true"></span>
+        <p><b>Eingepackt wird in Zeitung.</b> So sehen alle Päckli gleich aus, und kein Geschenkpapier verrät den Wichtel.</p>
       </div>
       <button class="btn voll" type="submit" id="bAnmelden">Ich bin dabei</button>
       <p class="fehler" id="eAnmelden" role="alert" hidden></p>
@@ -216,31 +226,31 @@ hr.trenner{border:0;border-top:1px solid var(--linie);margin:24px 0}
 
   <!-- 2) Eingetragen -->
   <section class="zettel" id="vMein" aria-labelledby="hMein" hidden>
-    <h2 id="hMein">Grüezi <span id="meinName"></span>, du bist im Sack.</h2>
-    <p class="sub">Jetzt heisst es warten wie vor dem Adventskalender.</p>
+    <h2 id="hMein">Schön, bist du dabei, <span id="meinName"></span>!</h2>
+    <p class="sub">Dein Name liegt im Sack. Jetzt heisst es warten, ungefähr so geduldig wie früher vor dem Adventskalender.</p>
 
     <div id="wartenBox" class="status"><span class="punkt" aria-hidden="true"></span>
       <p><b>Das Los ist noch nicht gefallen.</b> Sobald alle eingetragen sind, wird gezogen. Komm danach mit dem gleichen Handy oder deinem Schlüssel hierher zurück. <span id="hinweisMein"></span></p>
     </div>
 
     <div id="losBox" hidden>
-      <p style="margin:18px 0 0"><b>Das Los ist gefallen.</b> Schau, dass dir niemand über die Schulter guckt.</p>
+      <p style="margin:18px 0 0"><b>Das Los ist gefallen.</b> Pass auf, dass niemand mitschaut.</p>
       <div class="los" id="los" role="button" tabindex="0" aria-label="Los aufdecken">
         <div class="los-innen">
-          <div class="los-seite los-vorne"><b>Antippen zum Aufdecken</b><span style="opacity:.85;font-size:.9rem;margin-top:6px">Psst. Ganz geheim.</span></div>
+          <div class="los-seite los-vorne"><span class="titel" aria-hidden="true">Wichtel-Anzeiger · Ausgabe 2026</span><b>Antippen zum Auspacken</b><span class="psst">Psst. Ganz geheim.</span></div>
           <div class="los-seite los-hinten" id="losHinten">
-            <span style="font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--nebel)">Du beschenkst</span>
+            <span class="klein-label">Du beschenkst</span>
             <div class="name" id="zielName"></div>
             <p class="wunsch" id="zielWunsch"></p>
           </div>
         </div>
       </div>
-      <p style="font-size:.88rem;color:#58675f;margin:10px 0 0">Budget: höchstens CHF 50.–</p>
+      <p class="leise-text" style="font-size:.88rem;margin:10px 0 0">Höchstens CHF 50.– · eingepackt in Zeitung</p>
     </div>
 
     <hr class="trenner">
     <p style="margin:0 0 4px;font-weight:700">Dein geheimer Schlüssel</p>
-    <p style="margin:0;font-size:.92rem;color:#4a5a52">Hüte ihn wie Grosis Guetzlirezept. Damit siehst du dein Los auch auf einem anderen Gerät.</p>
+    <p class="leise-text" style="margin:0;font-size:.92rem">Hüte ihn wie das beste Guetzlirezept der Familie. Damit siehst du dein Los auch auf einem anderen Gerät.</p>
     <div class="code" id="meinCode"></div>
     <div class="zeile">
       <button class="btn leise klein" id="bCodeKopieren" type="button">Schlüssel kopieren</button>
@@ -274,8 +284,8 @@ hr.trenner{border:0;border-top:1px solid var(--linie);margin:24px 0}
         <button class="link" id="bLogout" type="button">Abmelden</button>
       </div>
 
-      <h3 style="font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:22px 0 4px">Wer ist dabei</h3>
-      <p style="margin:0;font-size:.88rem;color:#58675f">Paare kannst du verbinden. Sie ziehen sich dann nicht gegenseitig.</p>
+      <h3 style="margin:24px 0 4px">Wer ist dabei</h3>
+      <p class="leise-text" style="margin:0;font-size:.88rem">Paare kannst du verbinden. Sie ziehen sich dann nicht gegenseitig.</p>
       <ul class="liste" id="liste"></ul>
 
       <div class="feld" style="margin-top:20px">
@@ -295,8 +305,8 @@ hr.trenner{border:0;border-top:1px solid var(--linie);margin:24px 0}
 
       <div id="aufloesungAdmin" hidden>
         <hr class="trenner">
-        <h3 style="font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:0 0 4px">Die Auflösung</h3>
-        <p style="margin:0;font-size:.88rem;color:#58675f">Wer wen gezogen hat, ist gespeichert. Ziehst du selbst mit, schau erst am Fest nach.</p>
+        <h3>Die Auflösung</h3>
+        <p class="leise-text" style="margin:0;font-size:.88rem">Wer wen gezogen hat, ist gespeichert. Ziehst du selbst mit, schau erst am Fest nach.</p>
         <div class="zeile" style="margin-top:12px">
           <button class="btn leise klein" id="bKreisZeigen" type="button" aria-expanded="false">Wer beschenkt wen? Anzeigen</button>
           <button class="btn klein" id="bFreigeben" type="button">Auflösung für alle freigeben</button>
@@ -310,16 +320,16 @@ hr.trenner{border:0;border-top:1px solid var(--linie);margin:24px 0}
       </div>
 
       <hr class="trenner">
-      <h3 style="font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:0 0 4px">Alles gesichert</h3>
-      <p style="margin:0;font-size:.88rem;color:#58675f">Alle Anmeldungen mit Wunsch liegen sicher in der Datenbank. Hier gibt es zusätzlich eine Liste für Excel.</p>
+      <h3>Alles gesichert</h3>
+      <p class="leise-text" style="margin:0;font-size:.88rem">Alle Anmeldungen mit Wunsch liegen sicher in der Datenbank. Hier gibt es zusätzlich eine Liste für Excel.</p>
       <div class="zeile" style="margin-top:12px">
         <button class="btn leise klein" id="bCsv" type="button">Liste mit Wünschen speichern</button>
         <button class="btn leise klein" id="bCsvMitLos" type="button" hidden>Liste inkl. Auflösung speichern</button>
       </div>
 
       <hr class="trenner">
-      <h3 style="font-family:var(--f-display);font-weight:400;font-size:1.3rem;margin:0 0 4px">QR-Code für die Familie</h3>
-      <p style="margin:0;font-size:.88rem;color:#58675f">Führt direkt zum Wunschzettel. Als Bild speichern und in den Familienchat schicken.</p>
+      <h3>QR-Code für die Familie</h3>
+      <p class="leise-text" style="margin:0;font-size:.88rem">Führt direkt zum Wunschzettel. Als Bild speichern und in den Familienchat schicken.</p>
       <div class="qr-box" id="qr"></div>
       <div class="zeile">
         <button class="btn klein" id="bQrLaden" type="button">QR-Code speichern</button>
@@ -329,8 +339,8 @@ hr.trenner{border:0;border-top:1px solid var(--linie);margin:24px 0}
   </section>
 
   <footer class="fuss">
-    <span>Psst. Wer wen beschenkt, bleibt bis zum Fest unter dem Christbaum.</span>
-    <a class="link" href="#stube">Wichtelstube</a>
+    <span>Psst. Wer wen beschenkt, bleibt bis zum Fest unter dem Weihnachtsbaum.</span>
+    <span class="zeile" style="gap:16px"><a class="fotonachweis" href="https://unsplash.com/photos/u6fDUe2x11g" target="_blank" rel="noopener">Foto: Roberto Nickson / Unsplash</a><a class="link" href="#stube">Wichtelstube</a></span>
   </footer>
 </main>
 
@@ -692,23 +702,24 @@ function seitenLink(){ return location.origin+location.pathname; }
 function qrZeichnen(){
   const box=$("qr"); box.textContent="";
   if(typeof QRCode==="undefined"){ box.textContent="QR-Code konnte nicht geladen werden."; return; }
-  new QRCode(box,{text:seitenLink(),width:260,height:260,colorDark:"#13241e",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+  new QRCode(box,{text:seitenLink(),width:260,height:260,colorDark:"#3d2a1f",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
 }
 $("bQrLaden").addEventListener("click",()=>{
   const c=$("qr").querySelector("canvas"); if(!c) return;
   // Bild mit Rand und Titel für den Familienchat
   const W=600,H=720, k=document.createElement("canvas"); k.width=W; k.height=H; const g=k.getContext("2d");
-  g.fillStyle="#13241e"; g.fillRect(0,0,W,H);
-  g.fillStyle="#e2b85c"; g.font="700 20px Figtree, sans-serif"; g.textAlign="center"; g.fillText("FAMILIE ACKERMANN · WEIHNACHTEN 2026",W/2,60);
-  g.fillStyle="#eef1ec"; g.font="52px Gloock, Georgia, serif"; g.fillText("Wichteln",W/2,124);
+  g.fillStyle="#b1241c"; g.fillRect(0,0,W,H); g.fillStyle="#e3b258"; g.fillRect(W-58,0,22,H); g.fillRect(0,H-70,W,22);
+  g.fillStyle="#e3b258"; g.font="700 20px Manrope, sans-serif"; g.textAlign="center"; g.fillText("ACKERMANNS & PETERS · WEIHNACHTEN 2026",W/2,60);
+  g.fillStyle="#fffdf9"; g.font="italic 56px 'Instrument Serif', Georgia, serif"; g.fillText("Das Wichteln geht los.",W/2,126);
   g.fillStyle="#ffffff"; g.fillRect(110,160,380,380); g.imageSmoothingEnabled=false; g.drawImage(c,130,180,340,340);
-  g.fillStyle="#eef1ec"; g.font="500 22px Figtree, sans-serif"; g.fillText("Scannen, Namen eintragen, Wunsch notieren.",W/2,600);
-  g.fillStyle="#9db1a6"; g.font="18px Figtree, sans-serif"; g.fillText("Budget höchstens CHF 50.–",W/2,640);
-  const a=document.createElement("a"); a.href=k.toDataURL("image/png"); a.download="Ackermann-Wichteln-QR.png"; document.body.append(a); a.click(); a.remove();
+  g.fillStyle="#fffdf9"; g.font="600 22px Manrope, sans-serif"; g.fillText("Scannen, Namen eintragen, Wunsch notieren.",W/2,600);
+  g.fillStyle="#f6d9c8"; g.font="18px Manrope, sans-serif"; g.fillText("Höchstens CHF 50.– · eingepackt in Zeitung",W/2,640);
+  const a=document.createElement("a"); a.href=k.toDataURL("image/png"); a.download="Ackermanns-Peters-Wichteln-QR.png"; document.body.append(a); a.click(); a.remove();
 });
 $("bTextKopieren").addEventListener("click",()=>kopieren(
-`🎄 Ackermann-Wichteln 2026 🎄
-Dieses Jahr beschenkt jeder nur einen, dafür mit ganzem Herzen.
+`🎄 Das Wichteln geht los 🎄
+Die Ackermanns und Peters ziehen wieder.
+Auch dieses Jahr zieht jeder einen Namen und beschenkt ihn mit ganzem Herzen.\nBudget max. CHF 50.–, eingepackt wird in Zeitung.
 Trag dich ein und verrat deinem Wichtel einen Wunsch oder Tipp (max. CHF 50.–):
 ${seitenLink()}`,"Einladungstext kopiert"));
 
@@ -732,77 +743,38 @@ async function route(){
 window.addEventListener("hashchange",route);
 route();
 
-/* ---------- Scherenschnitt & Sterne ---------- */
-const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
-function zufall(seed){ return ()=>{ seed=(seed*16807)%2147483647; return (seed-1)/2147483646; }; }
-
-function scherenschnitt(){
-  const c=$("scherenschnitt"), dpr=Math.min(2,devicePixelRatio||1);
-  const W=c.clientWidth, H=c.clientHeight; c.width=W*dpr; c.height=H*dpr;
-  const g=c.getContext("2d"); g.scale(dpr,dpr); g.clearRect(0,0,W,H);
-  const papier=getComputedStyle(document.documentElement).getPropertyValue("--schnee").trim()||"#eef1ec";
-  const nacht=getComputedStyle(document.documentElement).getPropertyValue("--nacht").trim()||"#13241e";
-  const r=zufall(7);
-  g.fillStyle=papier;
-  // Hügel
-  g.beginPath(); g.moveTo(0,H);
-  for(let x=0;x<=W;x+=8){ g.lineTo(x,H-34-Math.sin(x/90)*8-Math.sin(x/37)*3); }
-  g.lineTo(W,H); g.closePath(); g.fill();
-  // Tannen
-  function tanne(x,y,h){
-    const w=h*.42, stufen=4;
-    g.beginPath();
-    for(let i=0;i<stufen;i++){
-      const ty=y-h+i*h/stufen*.85, by=ty+h/stufen*1.25, bw=w*(.45+i*.2);
-      g.moveTo(x,ty); g.lineTo(x+bw/2,by); g.lineTo(x-bw/2,by); g.closePath();
+})();
+/* ---------- Glitzer ---------- */
+(function(){
+  const c=document.getElementById("glitzer"); if(!c||!c.getContext) return;
+  const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const g=c.getContext("2d"); let W=0,H=0,dpr=1,teile=[];
+  function neu(){ return {x:Math.random()*W,y:Math.random()*H,r:.6+Math.random()*2.2,p:Math.random()*6.28,v:.15+Math.random()*.35,dx:(Math.random()-.5)*.15,gold:Math.random()<.7}; }
+  function groesse(){
+    dpr=Math.min(2,devicePixelRatio||1); W=c.clientWidth; H=c.clientHeight;
+    c.width=W*dpr; c.height=H*dpr; g.setTransform(dpr,0,0,dpr,0,0);
+    teile=Array.from({length:Math.round(W*H/2600)},neu);
+  }
+  function funkeln(x,y,r,a,gold){
+    g.globalAlpha=a; g.fillStyle=gold?"#f3cf7a":"#ffffff";
+    g.beginPath(); g.arc(x,y,r*.55,0,6.28); g.fill();
+    if(r>1.6){ // kleiner Stern mit vier Strahlen
+      g.globalAlpha=a*.7; g.strokeStyle=g.fillStyle; g.lineWidth=.8;
+      g.beginPath(); g.moveTo(x-r*2.6,y); g.lineTo(x+r*2.6,y); g.moveTo(x,y-r*2.6); g.lineTo(x,y+r*2.6); g.stroke();
     }
-    g.fill(); g.fillRect(x-h*.04,y-h*.08,h*.08,h*.12);
   }
-  // Bauernhaus mit warmem Fenster (Emmentaler Dach)
-  function haus(x,y){
-    const w=118,h=46;
-    g.fillStyle=papier;
-    g.beginPath(); g.moveTo(x-w/2-16,y-h); g.lineTo(x,y-h-48); g.lineTo(x+w/2+16,y-h); g.lineTo(x+w/2+6,y-h+12); g.lineTo(x-w/2-6,y-h+12); g.closePath(); g.fill();
-    g.fillRect(x-w/2,y-h,w,h);
-    g.fillRect(x+22,y-h-50,10,22); // Kamin
-    g.fillStyle="#e2b85c";
-    for(const fx of [-38,-14,10,34]) g.fillRect(x+fx-7,y-h+18,14,14);
-    g.fillStyle=nacht; g.fillRect(x-6,y-18,12,18); // Tür
-    g.beginPath(); g.arc(x,y-h-22,7,0,Math.PI*2); g.fill(); // Rundfenster im Giebel
-    g.fillStyle=papier;
-  }
-  const hausX=Math.min(W*.68,W-110);
-  for(let x=10;x<W;x+=26+r()*30){
-    if(Math.abs(x-hausX)<90) continue;
-    const h=46+r()*58; const y=H-30-Math.sin(x/90)*8;
-    tanne(x,y,h);
-  }
-  haus(hausX,H-30-Math.sin(hausX/90)*8);
-  // Schlitten mit Geschenk (links)
-  const sx=Math.max(40,W*.16), sy=H-24;
-  g.fillRect(sx-30,sy-10,60,8);
-  g.beginPath(); g.moveTo(sx-34,sy); g.lineTo(sx+30,sy); g.quadraticCurveTo(sx+42,sy,sx+40,sy-10); g.lineTo(sx+36,sy-10); g.quadraticCurveTo(sx+36,sy-4,sx+28,sy-4); g.lineTo(sx-34,sy-4); g.closePath(); g.fill();
-  g.fillStyle="#c8262c"; g.fillRect(sx-16,sy-34,30,24);
-  g.fillStyle=papier; g.fillRect(sx-3,sy-34,4,24); g.fillRect(sx-16,sy-24,30,4);
-}
-
-function sterne(){
-  const c=$("sterne"), dpr=Math.min(2,devicePixelRatio||1);
-  const W=c.clientWidth, H=c.clientHeight; c.width=W*dpr; c.height=H*dpr;
-  const g=c.getContext("2d"); g.scale(dpr,dpr);
-  const r=zufall(42), punkte=[];
-  for(let i=0;i<Math.round(W*H/5200);i++) punkte.push({x:r()*W,y:r()*H*.8,s:.6+r()*1.4,p:r()*6.28});
   function malen(t){
     g.clearRect(0,0,W,H);
-    for(const p of punkte){ const a=still?.7:.35+.45*(1+Math.sin(t/900+p.p))/2; g.fillStyle=`rgba(238,241,236,${a})`; g.beginPath(); g.arc(p.x,p.y,p.s,0,6.28); g.fill(); }
+    for(const p of teile){
+      const a=still?.6:Math.max(0,Math.sin(t/650+p.p))**3;
+      funkeln(p.x,p.y,p.r,a,p.gold);
+      if(!still){ p.y+=p.v; p.x+=p.dx; if(p.y>H+6){ p.y=-6; p.x=Math.random()*W; } }
+    }
+    g.globalAlpha=1;
     if(!still) requestAnimationFrame(malen);
   }
-  malen(0);
-}
-function zeichnen(){ scherenschnitt(); }
-zeichnen(); sterne();
-let rt; addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(zeichnen,150); });
-if(document.fonts) document.fonts.ready.then(()=>{});
+  groesse(); malen(0);
+  let rt; addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(groesse,150); });
 })();
 </script>
 </body>
